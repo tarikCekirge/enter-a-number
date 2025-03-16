@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import Title from "../components/ui/Title";
 import NumberContainer from "../components/game/NumberContainer";
+import PrimaryButton from "../components/ui/PrimaryButton";
 
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -13,15 +14,51 @@ function generateRandomBetween(min, max, exclude) {
   }
 }
 
+let minBoundary = 1;
+let maxBoundary = 100;
+
 const GameScreen = ({ userNumber }) => {
   const initialGues = generateRandomBetween(1, 100, userNumber);
-  const [currentGuess, setCurrentGues] = useState(initialGues);
+  const [currentGuess, setCurrentGuess] = useState(initialGues);
+
+  function nextGuessHandler(direction) {
+    if (
+      (direction === "lower" && currentGuess < userNumber) ||
+      (direction === "greater" && currentGuess > userNumber)
+    ) {
+      Alert.alert("Don't lie!", "You know that this is wrong...", [
+        { text: "Sorry!", style: "cancel" },
+      ]);
+      return;
+    }
+
+    if (direction === "lower") {
+      maxBoundary = currentGuess;
+    } else {
+      minBoundary = currentGuess + 1;
+    }
+
+    const newRndNumber = generateRandomBetween(
+      minBoundary,
+      maxBoundary,
+      currentGuess
+    );
+    setCurrentGuess(newRndNumber);
+  }
   return (
     <View>
       <Title> Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
       <View>
         <Text>Higher or Lower</Text>
+        <View style={styles.btnContainer}>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+            -
+          </PrimaryButton>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+            +
+          </PrimaryButton>
+        </View>
       </View>
       <View>
         <Text>LOG ROUNDS</Text>
@@ -32,4 +69,10 @@ const GameScreen = ({ userNumber }) => {
 
 export default GameScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  btnContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
