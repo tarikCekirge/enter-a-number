@@ -5,6 +5,7 @@ import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import GameScreen from "./screens/GameScreen";
+import Colors from "./constants/colors";
 
 export default function App() {
   // const insets = useSafeAreaInsets();
@@ -20,7 +21,7 @@ export default function App() {
 
   return (
     <LinearGradient
-      colors={["#7F0541", "#4E0328", "#7F0541"]}
+      colors={[Colors.primary[500], Colors.primary[600], Colors.accent[500]]}
       locations={[0.1, 0.5, 1]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
