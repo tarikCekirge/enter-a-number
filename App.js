@@ -1,11 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, ImageBackground } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import GameScreen from "./screens/GameScreen";
 
 export default function App() {
+  // const insets = useSafeAreaInsets();
   const [userNumber, setUserNumber] = useState(null);
   const pickedGameHandler = (pickedNumber) => {
     setUserNumber(pickedNumber);
@@ -30,7 +32,7 @@ export default function App() {
         style={styles.appContainer}
         imageStyle={styles.bgImage}
       >
-        {screen}
+        <SafeAreaView style={styles.rootContainer}>{screen}</SafeAreaView>
       </ImageBackground>
 
       <StatusBar style='auto' />
@@ -39,6 +41,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    paddingHorizontal: 28,
+  },
   appContainer: {
     flex: 1,
   },
