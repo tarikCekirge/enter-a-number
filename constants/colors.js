@@ -1,4 +1,5 @@
 const Colors = {
+  base: "#fafafa",
   primary: {
     500: "#72063c",
     600: "#640233",
