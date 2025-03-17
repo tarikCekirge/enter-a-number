@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Colors from "../constants/colors";
 import Title from "../components/ui/Title";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 const StartGameScreen = ({ onPickNumber }) => {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -38,7 +40,9 @@ const StartGameScreen = ({ onPickNumber }) => {
     <View style={styles.rootContainer}>
       <Title>Guess My Number</Title>
       <View style={styles.inputContainer}>
-        <Text style={styles.instructionText}>Enter a Number</Text>
+        <InstructionText style={styles.instructionText}>
+          Enter a Number
+        </InstructionText>
         <TextInput
           style={styles.numberInput}
           maxLength={2}
@@ -66,12 +70,7 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     marginTop: 100,
-    alignItems: "center",
-  },
-  instructionText: {
-    fontSize: 24,
-    color: Colors.accent[500],
-    fontWeight: "bold",
+    alignItems: "stretch",
   },
   inputContainer: {
     justifyContent: "center",
@@ -79,7 +78,6 @@ const styles = StyleSheet.create({
     padding: 16,
     marginTop: 36,
     backgroundColor: Colors.primary[700],
-    marginHorizontal: 16,
     borderRadius: 12,
     elevation: 4,
     shadowColor: "black",
@@ -95,6 +93,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     color: Colors.accent[500],
     marginVertical: 8,
+    marginBottom: 16,
     textAlign: "center",
   },
   buttonsContainer: {
