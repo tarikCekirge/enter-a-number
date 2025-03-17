@@ -94,4 +94,7 @@ const styles = StyleSheet.create({
   btn: {
     flex: 1,
   },
+  instructionText: {
+    marginBottom: 24,
+  },
 });
