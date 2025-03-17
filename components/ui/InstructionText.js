@@ -16,6 +16,6 @@ const styles = StyleSheet.create({
   instructionText: {
     fontSize: 24,
     color: Colors.accent[500],
-    fontWeight: "bold",
+    fontFamily: "open-sans",
   },
 });
