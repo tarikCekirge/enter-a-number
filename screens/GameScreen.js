@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import Title from "../components/ui/Title";
 import NumberContainer from "../components/game/NumberContainer";
@@ -6,6 +6,7 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
 import Entypo from "@expo/vector-icons/Entypo";
+import GuessLogItem from "../components/game/GuessLogItem";
 
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -23,12 +24,18 @@ let maxBoundary = 100;
 const GameScreen = ({ userNumber, onGameOver }) => {
   const initialGues = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGues);
+  const [guessRounds, setGuessRounds] = useState([initialGues]);
 
   useEffect(() => {
     if (currentGuess === userNumber) {
       onGameOver();
     }
   }, [currentGuess, userNumber, onGameOver]);
+
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
 
   function nextGuessHandler(direction) {
     // direction => 'lower', 'greater'
@@ -54,7 +61,10 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       currentGuess
     );
     setCurrentGuess(newRndNumber);
+    setGuessRounds((prevFuessRounds) => [newRndNumber, ...prevFuessRounds]);
   }
+
+  const guessRoundsLength = guessRounds.length;
 
   return (
     <View>
@@ -78,7 +88,24 @@ const GameScreen = ({ userNumber, onGameOver }) => {
         </View>
       </Card>
       <View>
-        <Text>LOG ROUNDS</Text>
+        <View>
+          <Text>Guesses</Text>
+          {/* {guessRounds.map((guess, index) => (
+            <Text key={index}>{guess}</Text>
+          ))} */}
+          <FlatList
+            data={guessRounds}
+            keyExtractor={(item) => item}
+            renderItem={(itemData) => (
+              <GuessLogItem
+                roundNumber={guessRoundsLength - itemData.index}
+                guess={itemData.item}
+              >
+                {itemData.item}
+              </GuessLogItem>
+            )}
+          />
+        </View>
       </View>
     </View>
   );

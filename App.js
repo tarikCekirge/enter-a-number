@@ -14,6 +14,7 @@ export default function App() {
   // const insets = useSafeAreaInsets();
   const [userNumber, setUserNumber] = useState(null);
   const [gameIsover, setGameIsover] = useState(true);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   const [fontsLoaded] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -33,6 +34,12 @@ export default function App() {
     setGameIsover(true);
   };
 
+  const startNewGameHandler = () => {
+    setGameIsover(null);
+    setUserNumber(null);
+    setGuessRounds(0);
+  };
+
   let screen = <StartGameScreen onPickNumber={pickedGameHandler} />;
   if (userNumber) {
     screen = (
@@ -40,7 +47,13 @@ export default function App() {
     );
   }
   if (gameIsover && userNumber) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={guessRounds}
+        onStartNewGame={startNewGameHandler}
+      />
+    );
   }
 
   return (
